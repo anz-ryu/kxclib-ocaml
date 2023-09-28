@@ -1,14 +1,14 @@
 (tests
  (names jsoo_unit_tests)
  (libraries
-   alcotest qcheck
-   kxclib kxclib_jsoo
-   kxclib_priv_test_lib
-   js_of_ocaml
- )
+  alcotest
+  qcheck
+  kxclib
+  kxclib_jsoo
+  kxclib_priv_test_lib
+  js_of_ocaml)
  (modes js)
  (js_of_ocaml
   (javascript_files additional_stubs.js))
- (flags (:standard
-          -open Kxclib
-          -open Kxclib_jsoo)))
+ (flags
+  (:standard -open Kxclib -open Kxclib_jsoo)))

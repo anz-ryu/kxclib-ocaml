@@ -3,12 +3,14 @@
  (public_name kxclib)
  (wrapped false)
  (modules kxclib)
- (preprocess (pps ppx_optcomp))
+ (preprocess
+  (pps ppx_optcomp))
  (libraries))
 
 (env
  (dev
-  (flags (:standard -warn-error -A -g)))
+  (flags
+   (:standard -warn-error -A -g)))
  (release
   (ocamlopt_flags -O3)
   (flags (:standard))))

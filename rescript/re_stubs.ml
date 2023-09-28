@@ -24,29 +24,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA. *)
 module type Js_exn = sig
-type t
+  type t
+  type exn += private Error of t
 
-type exn += private Error of t
+  external asJsExn : exn -> t option = "caml_as_js_exn"
+  external stack : t -> string option = "stack" [@@bs.get]
+  external message : t -> string option = "message" [@@bs.get]
+  external name : t -> string option = "name" [@@bs.get]
+  external fileName : t -> string option = "fileName" [@@bs.get]
 
-external asJsExn : exn -> t option =
-  "caml_as_js_exn"
+  external isCamlExceptionOrOpenVariant : 'a -> bool = "caml_is_extension"
+  (** internal use only *)
 
-external stack : t -> string option = "stack"
-[@@bs.get]
-external message : t -> string option = "message"
-[@@bs.get]
-external name : t -> string option = "name"
-[@@bs.get]
-external fileName : t -> string option = "fileName"
-[@@bs.get]
-
-
-external isCamlExceptionOrOpenVariant:
-  'a -> bool = "caml_is_extension"
-(** internal use only *)
-
-val anyToExnInternal: 'a -> exn
-(**
+  val anyToExnInternal : 'a -> exn
+  (**
   `anyToExnInternal obj` will take any value `obj` and wrap it
   in a Js.Exn.Error if given value is not an exn already. If
   `obj` is an exn, it will return `obj` without any changes.
@@ -68,14 +59,15 @@ val anyToExnInternal: 'a -> exn
   ```
 *)
 
-(** Raise Js exception Error object with stacktrace *)
-val raiseError : string -> 'a
-val raiseEvalError : string -> 'a
-val raiseRangeError : string -> 'a
-val raiseReferenceError :  string -> 'a
-val raiseSyntaxError : string -> 'a
-val raiseTypeError : string -> 'a
-val raiseUriError :  string -> 'a
+  val raiseError : string -> 'a
+  (** Raise Js exception Error object with stacktrace *)
+
+  val raiseEvalError : string -> 'a
+  val raiseRangeError : string -> 'a
+  val raiseReferenceError : string -> 'a
+  val raiseSyntaxError : string -> 'a
+  val raiseTypeError : string -> 'a
+  val raiseUriError : string -> 'a
 end
 
-module Js_exn = (val (failwith "stub: Js_exn") : Js_exn)
+module Js_exn = (val failwith "stub: Js_exn" : Js_exn)

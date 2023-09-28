@@ -2,7 +2,6 @@
  (name kxclib_jsoo)
  (public_name kxclib.jsoo)
  (optional)
- (libraries
-   js_of_ocaml
-   kxclib prr)
- (preprocess (pps ppx_optcomp js_of_ocaml-ppx)))
+ (libraries js_of_ocaml kxclib prr)
+ (preprocess
+  (pps ppx_optcomp js_of_ocaml-ppx)))

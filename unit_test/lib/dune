@@ -1,5 +1,5 @@
 (library
  (name kxclib_priv_test_lib)
  (libraries kxclib qcheck)
- (flags (:standard
-          -open Kxclib)))
+ (flags
+  (:standard -open Kxclib)))

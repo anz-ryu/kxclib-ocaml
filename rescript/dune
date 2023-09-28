@@ -1,9 +1,12 @@
 (rule
- (mode (promote (into src)))
+ (mode
+  (promote
+   (into src)))
  (target kxclib.ml)
  (deps kxclib.pp.ml kxclib_comp_re.ml)
  (action
-  (with-stdout-to %{target}
+  (with-stdout-to
+   %{target}
    (progn
     (cat kxclib_comp_re.ml)
     (echo "\nopen Kxclib_comp\n")
@@ -14,7 +17,8 @@
  (target kxclib_src.ml)
  (deps ../kxclib.ml)
  (action
-  (with-stdout-to %{target}
+  (with-stdout-to
+   %{target}
    (progn
     (echo "[%%define os_type \"re\"]\n")
     (cat %{deps})))))
@@ -23,8 +27,10 @@
  (name kxclib_src)
  (modules kxclib_src)
  (libraries re_stubs)
- (preprocess (pps ppx_deriving.std ppx_optcomp))
- (flags (:standard -open Re_stubs)))
+ (preprocess
+  (pps ppx_deriving.std ppx_optcomp))
+ (flags
+  (:standard -open Re_stubs)))
 
 (library
  (name re_stubs)
@@ -34,7 +40,8 @@
  (target kxclib.pp.ml)
  (deps kxclib_src.pp.ml)
  (action
-  (with-stderr-to %{target}
-    (run %{bin:ocamlc} -stop-after parsing -dsource %{deps}))))
+  (with-stderr-to
+   %{target}
+   (run %{bin:ocamlc} -stop-after parsing -dsource %{deps}))))
 
 (dirs :standard \ node_modules)
